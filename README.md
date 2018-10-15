@@ -1,12 +1,34 @@
-xboxkrnl
-========
-* **The goal:** XQEMU-compatible kernel to boot games
-* **Not the goal:** Creating a full-blown hardware-compatible kernel (maybe later..)
+xqemu-kernel
+============
+
+An open-source Xbox kernel designed for use with XQEMU.
+
+## Introduction
+
+[XQEMU](https://xqemu.com) is a low-level machine emulator, which needs a copy
+of the Xbox system software to start and run games. Unfortunately, this system
+software cannot be freely distributed due to it being copyrighted material. This
+means that in order to run XQEMU, the user must dump the MCPX ROM and TSOP flash
+images from their physical Xbox. This, of course, can be a significant barrier
+to entry.
+
+Though it as a goal for XQEMU to always maintain compatibility with the official
+Xbox system software, it is benificial to have an open-source alternative for
+multiple reasons. Firstly, an open-source alternative can be freely distributed
+and allow users to easily run XQEMU. Second, it opens the door to additional
+performance optimizations, for example: eliminating hardware initialization that
+is not strictly necessary for XQEMU, paravirtualization, custom memory
+allocation, custom thread scheduling, and more!
+
+**Note:** by design, this project contains no copyrighted code from the official
+Xbox kernel.
+
+## Current State
 
 Currently able to boot [nxdk](https://github.com/XboxDev/nxdk) samples! It'll be
 a little while before this can boot a real game.
 
-For this to work you'll need to use a [development branch of
+In order to use this kernel, you'll need to use a [development branch of
 XQEMU](https://github.com/mborgerson/xqemu/tree/khle) which facilitates loading
 an XBE.
 
