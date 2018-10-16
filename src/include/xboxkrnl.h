@@ -2111,7 +2111,7 @@ XBAPI NTSTATUS NTAPI RtlMultiByteToUnicodeN
 XBAPI VOID NTAPI RtlMoveMemory
 (
     PVOID Destination,
-    CONST PVOID *Source,
+    CONST PVOID Source,
     ULONG Length
 );
 

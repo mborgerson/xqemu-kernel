@@ -7914,9 +7914,9 @@ RtlMapGenericMask(
  */
 XBAPI VOID NTAPI __attribute__((weak))
 RtlMoveMemory(
-	PVOID  Destination,
-	PPVOID Source,
-	ULONG  Length
+	PVOID       Destination,
+	CONST PVOID Source,
+	ULONG       Length
 	)
 {
 	K_ENTER();
