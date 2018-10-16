@@ -3,7 +3,7 @@ xqemu-kernel
 
 An open-source Xbox kernel alternative, designed for use with XQEMU.
 
-![Build Status](https://travis-ci.org/mborgerson/xboxkrnl.svg?branch=master)
+![Build Status](https://travis-ci.org/mborgerson/xqemu-kernel.svg?branch=master)
 
 ## Introduction
 
