@@ -302,3 +302,29 @@ XBAPI NTSTATUS NTAPI NtWaitForSingleObject(
 	wait_ms(100);
 	return 0;
 }
+
+/**
+ * RtlFillMemory
+ */
+XBAPI VOID NTAPI
+RtlFillMemory(
+	PVOID Destination,
+	ULONG Length,
+	UCHAR Fill
+	)
+{
+	memset(Destination, Fill, Length);
+}
+
+/**
+ * RtlMoveMemory
+ */
+XBAPI VOID NTAPI
+RtlMoveMemory(
+	PVOID       Destination,
+	CONST PVOID Source,
+	ULONG       Length
+	)
+{
+	memmove(Destination, Source, Length);
+}
