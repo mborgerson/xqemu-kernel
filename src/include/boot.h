@@ -227,6 +227,7 @@ int _strncmp(const char *sz1, const char *sz2, int nMax);
 char * strcpy(char *sz, const char *szc);
 char * _strncpy (char * dest, const char * src, size_t n);
 void chrreplace(char *string, char search, char ch);
+void *memmove(void *dest, const void *src, size_t n);
 
 #define printf printk
 #define sleep wait_ms
