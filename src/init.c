@@ -166,7 +166,8 @@ XBAPI VOID NTAPI HalReadWritePCISpace(
 /**
  * KeConnectInterrupt
  */
-XBAPI BOOLEAN NTAPI KeConnectInterrupt(
+XBAPI BOOLEAN NTAPI
+KeConnectInterrupt(
 	PKINTERRUPT Interrupt
 	)
 {
@@ -176,7 +177,8 @@ XBAPI BOOLEAN NTAPI KeConnectInterrupt(
 /**
  * KeDelayExecutionThread
  */
-XBAPI NTSTATUS NTAPI KeDelayExecutionThread(
+XBAPI NTSTATUS NTAPI
+KeDelayExecutionThread(
 	KPROCESSOR_MODE WaitMode,
 	BOOLEAN         Alertable,
 	PLARGE_INTEGER  Interval
@@ -189,7 +191,8 @@ XBAPI NTSTATUS NTAPI KeDelayExecutionThread(
 /**
  * KeInitializeDpc
  */
-XBAPI VOID NTAPI KeInitializeDpc(
+XBAPI VOID NTAPI
+KeInitializeDpc(
 	PKDPC              Dpc,
 	PKDEFERRED_ROUTINE DeferredRoutine,
 	PVOID              DeferredContext
@@ -202,7 +205,8 @@ XBAPI VOID NTAPI KeInitializeDpc(
 /**
  * KeInitializeInterrupt
  */
-XBAPI VOID NTAPI KeInitializeInterrupt(
+XBAPI VOID NTAPI
+KeInitializeInterrupt(
 	PKINTERRUPT       Interrupt,
 	PKSERVICE_ROUTINE ServiceRoutine,
 	PVOID             ServiceContext,
@@ -235,7 +239,8 @@ KeInsertQueueDpc(
 /**
  * MmClaimGpuInstanceMemory
  */
-XBAPI PVOID NTAPI MmClaimGpuInstanceMemory(
+XBAPI PVOID NTAPI
+MmClaimGpuInstanceMemory(
 	SIZE_T  NumberOfBytes,
 	PSIZE_T NumberOfPaddingBytes
 	)
@@ -247,7 +252,8 @@ XBAPI PVOID NTAPI MmClaimGpuInstanceMemory(
 /**
  * MmAllocateContiguousMemoryEx
  */
-XBAPI PVOID NTAPI MmAllocateContiguousMemoryEx(
+XBAPI PVOID NTAPI
+MmAllocateContiguousMemoryEx(
 	SIZE_T    NumberOfBytes,
 	ULONG_PTR LowestAcceptableAddress,
 	ULONG_PTR HighestAcceptableAddress,
@@ -269,7 +275,8 @@ XBAPI PVOID NTAPI MmAllocateContiguousMemoryEx(
 /**
  * NtCreateEvent
  */
-XBAPI NTSTATUS NTAPI NtCreateEvent(
+XBAPI NTSTATUS NTAPI
+NtCreateEvent(
 	PHANDLE            EventHandle,
 	POBJECT_ATTRIBUTES ObjectAttributes,
 	EVENT_TYPE         EventType,
@@ -282,7 +289,8 @@ XBAPI NTSTATUS NTAPI NtCreateEvent(
 /**
  * NtPulseEvent
  */
-XBAPI NTSTATUS NTAPI NtPulseEvent(
+XBAPI NTSTATUS NTAPI
+NtPulseEvent(
 	HANDLE EventHandle,
 	PLONG  PreviousState
 	)
@@ -293,7 +301,8 @@ XBAPI NTSTATUS NTAPI NtPulseEvent(
 /**
  * NtWaitForSingleObject
  */
-XBAPI NTSTATUS NTAPI NtWaitForSingleObject(
+XBAPI NTSTATUS NTAPI
+NtWaitForSingleObject(
 	HANDLE         Handle,
 	BOOLEAN        Alertable,
 	PLARGE_INTEGER Timeout
