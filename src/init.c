@@ -308,7 +308,6 @@ NtWaitForSingleObject(
 	PLARGE_INTEGER Timeout
 	)
 {
-	wait_ms(100);
 	return 0;
 }
 
