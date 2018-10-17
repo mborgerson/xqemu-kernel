@@ -49,6 +49,7 @@ SECTIONS
 
     .data : {
         . = ALIGN(4K);
+        KRESERVED_START = .;
         DATA_BASE = .;
 
         *(.data*)
@@ -76,6 +77,8 @@ SECTIONS
         STACK_BASE = .;
         . += 4K;
         STACK_END = .;
+
+        KRESERVED_END = .;
     } >KRAM
 
     .fill : {
@@ -112,3 +115,6 @@ HEAP_SIZE = HEAP_END - HEAP_BASE;
 
 STACK_SIZE = STACK_END - STACK_BASE;
 FREE_ROM_SIZE = FREE_ROM_END - FREE_ROM_BASE;
+
+
+KRESERVED_SIZE = KRESERVED_END - KRESERVED_START;

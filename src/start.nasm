@@ -26,7 +26,7 @@ extern DATA_SIZE_L
 extern DATA_BASE
 extern DATA_LOAD
 
-extern init_paging
+extern early_paging_init
 extern init
 
 %macro WR_MSR 3 ; addr, hi, lo
@@ -97,7 +97,7 @@ start_32:
     ;
 
     mov esp, EARLY_STACK_END
-    call init_paging
+    call early_paging_init
 
     mov eax, PDB                       ; Load Page Directory
     mov cr3, eax

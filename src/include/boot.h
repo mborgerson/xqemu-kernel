@@ -280,35 +280,4 @@ char *AvCableName(void);
 
 uint32_t dumb_valloc(uint32_t size, uint32_t alignment);
 
-
-
-
-
-
-#define PDE_P  (1<<0) // Present
-#define PDE_RW (1<<1) // Read/Write
-#define PDE_U  (1<<2) // User/Supervisor
-#define PDE_W  (1<<3) // Write Through
-#define PDE_D  (1<<4) // Cache Disabled
-#define PDE_A  (1<<5) // Accessed
-#define PDE_S  (1<<7) // Size
-
-#define PTE_P  (1<<0) // Present
-#define PTE_RW (1<<1) // Read/Write
-#define PTE_U  (1<<2) // User/Supervisor
-#define PTE_W  (1<<3) // Write Through
-#define PTE_C  (1<<4) // Cache Disabled
-#define PTE_A  (1<<5) // Accessed
-#define PTE_D  (1<<6) // Dirty
-#define PTE_G  (1<<8) // Global
-
-#define PDE_PT_MASK (0xfffff000)
-#define PTE_PA_MASK (0xfffff000)
-
-#define ADDR_TO_PDE_INDEX(x)  ((x) >> 22) // One 32b PDE covers 4 MiB
-#define ADDR_TO_PTE_INDEX(x)  ((x) >> 22) // One 32b PTE covers 4 KiB
-
-extern unsigned char PDB[];
-
-
 #endif // _Boot_H_

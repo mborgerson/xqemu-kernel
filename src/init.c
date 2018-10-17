@@ -250,29 +250,6 @@ MmClaimGpuInstanceMemory(
 }
 
 /**
- * MmAllocateContiguousMemoryEx
- */
-XBAPI PVOID NTAPI
-MmAllocateContiguousMemoryEx(
-	SIZE_T    NumberOfBytes,
-	ULONG_PTR LowestAcceptableAddress,
-	ULONG_PTR HighestAcceptableAddress,
-	ULONG_PTR Alignment,
-	ULONG     Protect
-	)
-{
-	printk("MmAllocateContiguousMemoryEx(%x, %x, %x, %x, %x) = ",
-		NumberOfBytes,
-		LowestAcceptableAddress,
-		HighestAcceptableAddress,
-		Alignment,
-		Protect);
-	uint32_t xbe_mem = 0x80000000 | dumb_valloc(NumberOfBytes, Alignment);
-	printk("%x\n", xbe_mem);
-	return (PVOID)xbe_mem;
-}
-
-/**
  * NtCreateEvent
  */
 XBAPI NTSTATUS NTAPI

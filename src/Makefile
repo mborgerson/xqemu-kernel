@@ -14,7 +14,6 @@ OBJECTS      := \
 	stubs.o \
 	printk.o \
 	mm/dlmalloc.o \
-	mm/vmalloc.o \
 	mm/paging.o \
 	drivers/cpu/cputools.o \
 	drivers/cpu/ioapic.o \
@@ -46,8 +45,15 @@ ifeq ($(V),)
 endif
 
 
-mm/dlmalloc.o.cflags = -DLACKS_UNISTD_H -DHAVE_MORECORE=0 -DHAVE_MREMAP=0 \
-	-DLACKS_ERRNO_H=1 -DDEFAULT_GRANULARITY=4096 -DMSPACES=1 -DUSE_DL_PREFIX=1
+mm/dlmalloc.o.cflags = -DHAVE_MORECORE=0 -DHAVE_MREMAP=0 \
+	-DDEFAULT_GRANULARITY=4096 -DMSPACES=1 -DUSE_DL_PREFIX=1 \
+	-DLACKS_ERRNO_H=1 \
+	-DLACKS_FCNTL_H=1 \
+	-DLACKS_SCHED_H=1 \
+	-DLACKS_STRINGS_H=1 \
+	-DLACKS_SYS_PARAM_H=1 \
+	-DLACKS_TIME_H=1 \
+	-DLACKS_UNISTD_H=1 \
 
 %.bin: %.elf
 	@echo "[**] Converting $< to $@"
