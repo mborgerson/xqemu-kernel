@@ -13,7 +13,7 @@ OBJECTS      := \
 	init.o \
 	stubs.o \
 	printk.o \
-	mm/kmalloc.o \
+	mm/dlmalloc.o \
 	mm/vmalloc.o \
 	mm/paging.o \
 	drivers/cpu/cputools.o \
@@ -45,6 +45,10 @@ ifeq ($(V),)
 	Q = @
 endif
 
+
+mm/dlmalloc.o.cflags = -DLACKS_UNISTD_H -DHAVE_MORECORE=0 -DHAVE_MREMAP=0 \
+	-DLACKS_ERRNO_H=1 -DDEFAULT_GRANULARITY=4096 -DMSPACES=1 -DUSE_DL_PREFIX=1
+
 %.bin: %.elf
 	@echo "[**] Converting $< to $@"
 	$(Q) $(OBJCOPY) $(OBJCOPYFLAGS) $^ $@
@@ -55,7 +59,7 @@ endif
 
 %.o: %.c
 	@echo "[**] Compiling $<"
-	$(Q) $(CC) $(CFLAGS) -o $@ -c $<
+	$(Q) $(CC) $(CFLAGS) $($@.cflags) -o $@ -c $<
 
 %.o: %.S
 	@echo "[**] Assembling $<"

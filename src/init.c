@@ -23,10 +23,10 @@
 #include "xdecl.h"
 #include "lib/xbe/xbe.h"
 
-extern volatile int nInteruptable;
 volatile CURRENT_VIDEO_MODE_DETAILS vmode;
-extern void (*video_interrupt_hook)(void);
 extern char HEAP_BASE[], HEAP_SIZE[];
+extern volatile int nInteruptable;
+extern void (*video_interrupt_hook)(void);
 
 void init(void)
 {
@@ -267,7 +267,7 @@ MmAllocateContiguousMemoryEx(
 		HighestAcceptableAddress,
 		Alignment,
 		Protect);
-	uint32_t xbe_mem = 0x80000000 | valloc(NumberOfBytes, Alignment);
+	uint32_t xbe_mem = 0x80000000 | dumb_valloc(NumberOfBytes, Alignment);
 	printk("%x\n", xbe_mem);
 	return (PVOID)xbe_mem;
 }
@@ -321,3 +321,25 @@ HalRegisterShutdownNotification(
 	)
 {
 }
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// dlmalloc support
+
+int errno;
+
+void abort()
+{
+	printk("abort()!\n");
+	while (1);
+}
+
+int time()
+{
+	// Should be since EPOCH but w/e
+	return BIOS_TICK_COUNT;
+}
+

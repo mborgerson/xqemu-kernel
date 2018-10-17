@@ -31,7 +31,7 @@ static inline uint32_t align_up(uint32_t addr, uint32_t alignment)
 	return addr;
 }
 
-uint32_t valloc(uint32_t size, uint32_t alignment)
+uint32_t dumb_valloc(uint32_t size, uint32_t alignment)
 {
 
 	if (alignment != 0) {

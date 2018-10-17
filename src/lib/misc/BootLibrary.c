@@ -36,7 +36,7 @@ void * memcpy(void * to, const void * from, size_t n)
 }
 
 
-int strlen(const char * s)
+size_t strlen(const char * s)
 {
 	int d0;
 	register int __res;
@@ -76,17 +76,17 @@ void * memset(void *s, int c,  size_t count)
 }
 
 
-int memcmp(const void * cs,const void * ct,size_t count)
+int memcmp(const void * cs, const void * ct, size_t count)
 {
-        const unsigned char *su1, *su2;
-        int res = 0;
+    const unsigned char *su1, *su2;
+    size_t res = 0;
 
 	for( su1 = cs, su2 = ct; 0 < count; ++su1, ++su2, count--)
 		if ((res = *su1 - *su2) != 0) break;
 	return res;
 }
 
-char * strcpy(char * dest,const char *src)
+char * strcpy(char * dest, const char *src)
 {
 	int d0, d1, d2;
 	__asm__ __volatile__(
@@ -99,7 +99,7 @@ char * strcpy(char * dest,const char *src)
 	return dest;
 }
 
-char * strncpy(char * dest,const char *src,int count)
+char * strncpy(char * dest,const char *src, size_t count)
 {
 	int d0, d1, d2, d3;
 	__asm__ __volatile__(

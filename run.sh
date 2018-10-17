@@ -14,5 +14,5 @@ $XQEMU \
 	-display sdl \
 	-device lpc47m157 \
 	-serial stdio \
-	-s \
+	 \
 	2>&1

@@ -230,7 +230,7 @@ void chrreplace(char *string, char search, char ch);
 void *memmove(void *dest, const void *src, size_t n);
 
 #define printf printk
-#define sleep wait_ms
+// #define sleep wait_ms
 int tolower(int ch);
 int isspace (int c);
 
@@ -260,10 +260,10 @@ char *strrchr0(char *string, char ch);
 
 void setLED(void *pattern);
 
-int strlen(const char * s);
+size_t strlen(const char * s);
 int sprintf(char * buf, const char *fmt, ...);
-char * strncpy(char * dest,const char *src,int count);
-char * strstr(const char * s1,const char * s2);
+char * strncpy(char * dest, const char *src, size_t count);
+char * strstr(const char * s1, const char * s2);
 
 
 
@@ -278,7 +278,7 @@ int vsprintf(char *buf, const char *fmt, va_list args);
 char *VideoEncoderName(void);
 char *AvCableName(void);
 
-uint32_t valloc(uint32_t size, uint32_t alignment);
+uint32_t dumb_valloc(uint32_t size, uint32_t alignment);
 
 
 

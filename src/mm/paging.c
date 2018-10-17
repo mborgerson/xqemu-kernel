@@ -76,3 +76,51 @@ void init_paging()
 		pde[ADDR_TO_PTE_INDEX(addr)] = addr | PDE_P | PDE_RW | PDE_U | PDE_D | PDE_S;
 	}
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include <sys/types.h>
+
+typedef void *mspace;
+static mspace kheap;
+
+mspace create_mspace_with_base(void *base, size_t capacity, int locked);
+void *mspace_malloc(mspace msp, size_t bytes);
+void mspace_free(mspace msp, void *mem);
+
+void MemoryManagementInitialization(void * pvStartAddress, u32 dwTotalMemoryAllocLength)
+{
+	// Initialize initial statically-allocated heap
+	kheap = create_mspace_with_base(pvStartAddress, dwTotalMemoryAllocLength, 0);
+
+	// FIXME:
+	// Set up page allocator
+	// Reserve pre-allocated kernel pages (.data/.bss)
+	// Enable page allocator
+}
+
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+{
+	printk("mmap(%x, %x, %x, %x, %x, %x)\n",
+		addr, length, prot, flags, fd, offset);
+	printk("Page allocator not ready yet!\n");
+	abort();
+	return NULL;
+}
+
+int munmap(void *addr, size_t length)
+{
+	printk("munmap(%x, %x)\n", addr, length);
+	return 0;
+}
+
+void *malloc(size_t bytes)
+{
+	return mspace_malloc(kheap, bytes);
+}
+
+void free(void *ptr)
+{
+	mspace_free(kheap, ptr);
+}
