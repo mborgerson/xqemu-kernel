@@ -336,3 +336,14 @@ RtlMoveMemory(
 {
 	memmove(Destination, Source, Length);
 }
+
+/**
+ * HalRegisterShutdownNotification
+ */
+XBAPI VOID NTAPI
+HalRegisterShutdownNotification(
+	PHAL_SHUTDOWN_REGISTRATION ShutdownRegistration,
+	BOOLEAN                    Register
+	)
+{
+}
