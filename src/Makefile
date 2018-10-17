@@ -31,6 +31,7 @@ OBJECTS      := \
 	lib/misc/BootLibrary.o \
 	lib/misc/vsprintf.o \
 	lib/xbe/xbe.o \
+	rtl/mem.o \
 
 INCLUDE = -I. -Iinclude -Ilib/eeprom -Ilib/misc -Ilib/font -Idrivers/video -Idrivers/cpu
 CFLAGS += $(INCLUDE)
