@@ -278,6 +278,20 @@ int vsprintf(char *buf, const char *fmt, va_list args);
 char *VideoEncoderName(void);
 char *AvCableName(void);
 
-uint32_t dumb_valloc(uint32_t size, uint32_t alignment);
+
+
+
+static inline uint32_t align_up(uint32_t addr, uint32_t alignment)
+{
+	addr += alignment-1;
+	addr &= ~(alignment-1);
+	return addr;
+}
+
+static inline uint32_t align_down(uint32_t addr, uint32_t alignment)
+{
+	addr &= ~(alignment-1);
+	return addr;
+}
 
 #endif // _Boot_H_

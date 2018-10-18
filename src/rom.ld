@@ -23,7 +23,7 @@ MEMORY
     ROM   (RX) : ORIGIN = (4096M-1M),   LENGTH = 1M,
     PRAM  (RW) : ORIGIN = 0,            LENGTH = 128M,
     RAM   (RW) : ORIGIN = 0x80000000,   LENGTH = 128M,
-    KRAM  (RW) : ORIGIN = 0x83010000,   LENGTH = 16K
+    KRAM  (RW) : ORIGIN = 0x80010000,   LENGTH = 12K + 16K + 128K
 }
 
 EARLY_STACK_END = 0x100000;
@@ -63,8 +63,11 @@ SECTIONS
     .bss (NOLOAD) : {
         . = ALIGN(4K);
 
+        page_tables = .;
+        . += 128K;
+
         HEAP_BASE = .;
-        . += 4K;
+        . += 16K;
         HEAP_END = .;
 
         BSS_BASE = .;

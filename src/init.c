@@ -61,6 +61,25 @@ void init(void)
 		for(n=5;n>=0;n--) { *pb++=	eeprom.MACAddress[n]; } // send it in backwards, its reversed by the driver
     }
 
+
+	PVOID BaseAddress = NULL;
+	SIZE_T RegionSize = 0x4000;
+
+	printf("Testing NULL BaseAddress allocation...");
+	NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
+	printk("done\n");
+
+	memset(BaseAddress, 0xCA, 10);
+
+	BaseAddress = (void*)0x200000;
+	printf("Testing preset %x BaseAddress allocation...", BaseAddress);
+	NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
+	printk("done\n");
+
+	memset(BaseAddress, 0xCA, 10);
+
+	asm volatile ("jmp .");
+
 	// FIXME: Move this into a HLE init function
 
 	// Setup the HLE device
