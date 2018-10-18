@@ -253,6 +253,7 @@ KeInsertQueueDpc(
 	// Just call the DPC for now
     void (*dpc_func)(void) = Dpc->DeferredRoutine;
     dpc_func();
+    return TRUE;
 }
 
 /**

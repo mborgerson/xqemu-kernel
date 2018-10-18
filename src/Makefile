@@ -61,6 +61,7 @@ mm/dlmalloc.o.cflags = -DHAVE_MORECORE=0 -DHAVE_MREMAP=0 \
 	-DLACKS_SYS_PARAM_H=1 \
 	-DLACKS_TIME_H=1 \
 	-DLACKS_UNISTD_H=1 \
+	-DUSE_LOCKS=0
 
 %.bin: %.elf
 	@echo "objcopy  $@"

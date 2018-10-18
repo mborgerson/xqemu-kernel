@@ -452,6 +452,7 @@ NtAllocateVirtualMemory(
 
 	*BaseAddress = (void*)virt_mem;
 	*RegionSize = num_bytes;
+	return STATUS_SUCCESS;
 }
 
 /**
