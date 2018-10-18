@@ -1,5 +1,5 @@
 CC           := gcc
-CFLAGS       := -Werror -O0 -march=pentium -m32 -g -fno-stack-protector -ffreestanding -fno-pic
+CFLAGS       := -Wall -O0 -march=pentium -m32 -g -fno-stack-protector -ffreestanding -fno-pic
 LD           := ld
 LDFLAGS      := --script=rom.ld -m elf_i386 --gc-sections
 NASM         := nasm
