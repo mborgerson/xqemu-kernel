@@ -138,6 +138,8 @@ typedef struct _XBE_LIBRARY {
 
 uint32_t xbe_unscramble(uint32_t addr, uint32_t debug, uint32_t retail);
 void xbe_patch_imports(XBE_HEADER *hdr);
+XBE_HEADER *load_xbe(char *xbe_data);
+void *get_xbe_entry(XBE_HEADER *hdr);
 
 extern void *m_import_addrs[400];
 

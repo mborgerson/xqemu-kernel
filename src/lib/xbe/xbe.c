@@ -41,3 +41,58 @@ void xbe_patch_imports(XBE_HEADER *hdr)
         imports[i] = (uint32_t)m_import_addrs[import_num];
     }
 }
+
+#include "boot.h"
+
+XBE_HEADER *load_xbe(char *xbe_data)
+{
+    XBE_HEADER *header = (XBE_HEADER *)xbe_data;
+
+    if (strncmp((char*)header->Magic, "XBEH", 4) != 0) {
+        printf("Invalid Magic!\n");
+        while (1);
+    }
+
+    printf("Base Address: %x\n", header->BaseAddress);
+
+    XBE_SECTION *sections = (XBE_SECTION *)(xbe_data + header->Sections - header->BaseAddress);
+
+    // Copy header data
+    PVOID BaseAddress = (PVOID)header->BaseAddress;
+    SIZE_T RegionSize = header->HeaderSize;
+    printf("HeaderSize = %x\n", RegionSize);
+
+    NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
+    // FIXME: Leak, check return status (we assert now)
+    memcpy((void*)(header->BaseAddress), xbe_data, header->HeaderSize);
+
+    // Copy section data
+    int i;
+    for (i = 0; i < header->NumSections; i++) {
+        XBE_SECTION *s = &sections[i];
+        printf("[Section %d] %s\n", i, &xbe_data[s->SectionName-header->BaseAddress]);
+
+        printf("\tVirtualAddress = %08x\n", s->VirtualAddress);
+        printf("\tVirtualSize    = %08x\n", s->VirtualSize);
+        printf("\tFileAddress    = %08x\n", s->FileAddress);
+        printf("\tFileSize       = %08x\n", s->FileSize);
+
+        BaseAddress = (void*)s->VirtualAddress;
+        RegionSize = s->VirtualSize;
+        NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
+        // FIXME: Leak, check return status (we assert now)
+        printf("Copying %x bytes from %x to %x\n", s->FileSize, &xbe_data[s->FileAddress], (void*)(s->VirtualAddress));
+        memcpy((void*)(s->VirtualAddress), &xbe_data[s->FileAddress], s->FileSize);
+        memset((void*)(s->VirtualAddress+s->FileSize), 0, s->VirtualSize-s->FileSize);
+
+        printf("\tLoaded\n");
+    }
+
+    xbe_patch_imports(header);
+    return (XBE_HEADER *)header->BaseAddress;
+}
+
+void *get_xbe_entry(XBE_HEADER *hdr)
+{
+    return (void*)xbe_unscramble(hdr->EntryPoint, XOR_EP_DEBUG, XOR_EP_RETAIL);
+}
