@@ -503,6 +503,8 @@ void IntHandler15C(void)
 	bprintf("Unhandled Interrupt 15\n");
 }
 
+#define bprintf printk
+
 //void IntHandlerException0C(void) {	bprintf("CPU Exc: Divide by Zero\n");	while(1) ; }
 void IntHandlerException0C(void) {	bprintf("CPU Exc: Divide by Zero\n");}
 void IntHandlerException1C(void) {	bprintf("CPU Exc: Single Step\n");	while(1) ; }
