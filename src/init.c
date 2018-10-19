@@ -28,6 +28,22 @@ extern char HEAP_BASE[], HEAP_SIZE[];
 extern volatile int nInteruptable;
 extern void (*video_interrupt_hook)(void);
 
+#include "pe.h"
+
+static void *get_pe_entry(char *pe)
+{
+    struct mz_hdr *mz_hdr = (struct mz_hdr *)pe;
+    assert (mz_hdr->magic == MZ_MAGIC);
+
+    struct pe_hdr *pe_hdr = (struct pe_hdr *)&pe[mz_hdr->peaddr];
+    assert (pe_hdr->magic == PE_MAGIC);
+
+    struct pe32_opt_hdr *pe_opt_hdr = (struct pe32_opt_hdr *)&pe[mz_hdr->peaddr + sizeof(struct pe_hdr)];
+    assert(pe_opt_hdr->magic == IMAGE_FILE_OPT_PE32_MAGIC);
+
+    return (void*)(pe_opt_hdr->image_base + pe_opt_hdr->entry_point);
+}
+
 void init(void)
 {
 	nInteruptable = 0;
@@ -75,6 +91,7 @@ void init(void)
 	// then call them to find and load the XBE.
 	//
 
+#if 0
 	// Get XBE size
 	size_t xbe_size = *((volatile uint32_t *)(KHLE_BAR + 0x10));
 	printk("XBE Size: %x\n", xbe_size);
@@ -95,6 +112,14 @@ void init(void)
     void (*xbe_entry)(void) = get_xbe_entry(hdr);
     printk("Jumping to XBE entry point %p\n", xbe_entry);
     xbe_entry();
+#endif
+
+	// PE Loader Testing
+	asm volatile ("cli");
+	*((volatile uint32_t *)(KHLE_BAR + 0x10)) = 0xF800;
+	void (*pe_entry)(void) = get_pe_entry((void*)0x10000);
+	printk("Jumping to PE entry point %p\n", pe_entry);
+	pe_entry();
 
 	while(1);
 }
