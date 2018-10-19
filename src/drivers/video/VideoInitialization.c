@@ -37,13 +37,6 @@ typedef struct {
 	long vscale;
 } BLANKING_PARAMETER;
 
-#ifndef JUSTVIDEO
-static double fabs(double d) {
-	if (d > 0) return d;
-	else return -d;
-}
-#endif
-
 static u8 NvGetCrtc(u8 * pbRegs, int nIndex) {
 	*((volatile u8 *)&pbRegs[0x6013d4])=nIndex;
 	return *((volatile u8 *)&pbRegs[0x6013d5]);

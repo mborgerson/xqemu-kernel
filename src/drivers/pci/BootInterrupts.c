@@ -385,6 +385,10 @@ void IntHandlerCSmc(void)
 	}
 }
 
+// FIXME: clean this up
+#undef bprintf
+#define bprintf printk
+
 void IntHandlerCIde(void)
 {
 	if(!nInteruptable) return;
@@ -502,8 +506,6 @@ void IntHandler15C(void)
 	if(!nInteruptable) return;
 	bprintf("Unhandled Interrupt 15\n");
 }
-
-#define bprintf printk
 
 //void IntHandlerException0C(void) {	bprintf("CPU Exc: Divide by Zero\n");	while(1) ; }
 void IntHandlerException0C(void) {	bprintf("CPU Exc: Divide by Zero\n");}

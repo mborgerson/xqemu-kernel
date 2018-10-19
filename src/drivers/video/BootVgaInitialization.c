@@ -336,7 +336,7 @@ void BootVgaInitializationKernelNG(CURRENT_VIDEO_MODE_DETAILS * pvmode) {
 	if (encoder_ok) {
 		//Load registers into chip
 		unsigned char *regs;
-		unsigned long *XCal_Reg;
+		// unsigned long *XCal_Reg;
 		int n1=0;
 
 		//Set up the GPU
@@ -497,8 +497,7 @@ static void mapNvMem (RIVA_HW_INST *riva, u8 *IOAddress)
 
 static void NVDisablePalette (RIVA_HW_INST *riva, int head)
 {
-	volatile CARD8 tmp;
-	tmp = VGA_RD08(riva->PCIO + head * HEAD, VGA_IOBASE_COLOR + VGA_IN_STAT_1_OFFSET);
+	(void)VGA_RD08(riva->PCIO + head * HEAD, VGA_IOBASE_COLOR + VGA_IN_STAT_1_OFFSET);
 	VGA_WR08(riva->PCIO + head * HEAD, VGA_ATTR_INDEX, 0x20);
 }
 

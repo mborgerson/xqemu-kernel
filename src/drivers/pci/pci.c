@@ -172,8 +172,6 @@ void BootAGPBUSInitialization(void)
 
 void BootDetectMemorySize(void)
 {
-	int i;
-	int result;
 	unsigned char *fillstring;
 	void *membasetop = (void*)(0x80000000 | (64*1024*1024));
 	void *membaselow = (void*)(0x80000000 | (0));
