@@ -12,12 +12,15 @@
 #pragma once
 #define DUMB_POINTERS 0
 
+// FIXME
 /* stop clang from crying */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wlanguage-extension-token"
+// #pragma clang diagnostic push
+// #pragma clang diagnostic ignored "-Wlanguage-extension-token"
 
 /* MSVC-compatibility for structure-packing */
-#pragma ms_struct on
+// FIXME: might want -mms-bitfields
+// FIXME: might also want -mabi=ms ?
+// #pragma ms_struct on
 
 #if defined(__cplusplus)
 extern "C"
@@ -2325,6 +2328,6 @@ typedef VOID (* NTAPI PKSYSTEM_ROUTINE) (
 }
 #endif
 
-#pragma ms_struct reset
+// #pragma ms_struct reset
 
-#pragma clang diagnostic pop
+// #pragma clang diagnostic pop
