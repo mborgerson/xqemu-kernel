@@ -61,27 +61,7 @@ void init(void)
 		for(n=5;n>=0;n--) { *pb++=	eeprom.MACAddress[n]; } // send it in backwards, its reversed by the driver
     }
 
-
-	PVOID BaseAddress = NULL;
-	SIZE_T RegionSize = 0x4000;
-
-	printf("Testing NULL BaseAddress allocation...");
-	NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
-	printk("done\n");
-
-	memset(BaseAddress, 0xCA, 10);
-
-	BaseAddress = (void*)0x200000;
-	printf("Testing preset %x BaseAddress allocation...", BaseAddress);
-	NtAllocateVirtualMemory(&BaseAddress, 0, &RegionSize, 0, 0);
-	printk("done\n");
-
-	memset(BaseAddress, 0xCA, 10);
-
-	asm volatile ("jmp .");
-
 	// FIXME: Move this into a HLE init function
-
 	// Setup the HLE device
 	#define KHLE_BAR 0xfed0c000
 	PciWriteDword(0, 0x11,    0, 0x04, 7);
@@ -95,15 +75,24 @@ void init(void)
 	// then call them to find and load the XBE.
 	//
 
-	// Poke the KHLE device to load an XBE into RAM for us
-	(void)*((volatile uint32_t *)(KHLE_BAR + 0x10));
+	// Get XBE size
+	size_t xbe_size = *((volatile uint32_t *)(KHLE_BAR + 0x10));
+	printk("XBE Size: %x\n", xbe_size);
 
-	// XBE sections are now in-memory at this point!
-	XBE_HEADER *hdr = (XBE_HEADER *)0x10000;
-	xbe_patch_imports(hdr);
+	// Allocate some memory for the XBE
+	void *xbe_load_addr = MmAllocateContiguousMemoryEx(align_up(xbe_size, 0x1000), 0, 0x3FFFFFF, 0, 0);
+	// FIXME: Leak
+
+	printk("XBE Load Address: %x\n", xbe_load_addr);
+	assert(xbe_load_addr != NULL);
+
+	// Poke the KHLE device to load an XBE into RAM for us
+	*((volatile uint32_t *)(KHLE_BAR + 0x10)) = (uint32_t)xbe_load_addr & ~0x80000000;
+
+	XBE_HEADER *hdr = load_xbe(xbe_load_addr);
 
     // Get unscrambled XBE entry point
-    void (*xbe_entry)(void) = (void*)xbe_unscramble(hdr->EntryPoint, XOR_EP_DEBUG, XOR_EP_RETAIL);
+    void (*xbe_entry)(void) = get_xbe_entry(hdr);
     printk("Jumping to XBE entry point %p\n", xbe_entry);
     xbe_entry();
 
