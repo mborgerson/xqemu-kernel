@@ -126,7 +126,10 @@ XBAPI VOID NTAPI AvSendTVEncoderOption(
 	PULONG Result
 	)
 {
-	*Result = 0x00400101;
+	printf("AvSendTVEncoderOption(%x, %x, %x, %x)\n", RegisterBase, Option, Param, Result);
+	if (Result != NULL) {
+		*Result = 0x00400101;
+	}
 }
 
 /**
