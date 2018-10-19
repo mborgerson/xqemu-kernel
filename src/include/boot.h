@@ -294,4 +294,12 @@ static inline uint32_t align_down(uint32_t addr, uint32_t alignment)
 	return addr;
 }
 
+
+#define assert(x) do { \
+	if (!(x)) { \
+		printf("ASSERTION FAILED %s:%d\n", __FILE__, __LINE__); \
+		while(1); \
+	} \
+} while(0)
+
 #endif // _Boot_H_
