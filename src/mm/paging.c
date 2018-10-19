@@ -23,15 +23,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-// FIXME: create assert.h file
 // #include <assert.h>
-#define assert(x) do { \
-	if (!(x)) { \
-		printf("ASSERTION FAILED %s:%d\n", __FILE__, __LINE__); \
-		while(1); \
-	} \
-} while(0)
+
 #include "list.h"
 
 #define DEBUG_PAGING 0
