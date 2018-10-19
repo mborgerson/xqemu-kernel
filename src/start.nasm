@@ -95,7 +95,7 @@ start_32:
     ;
     ; Initialize Page Tables
     ;
-
+%if 0
     mov esp, EARLY_STACK_END
     call early_paging_init
 
@@ -109,6 +109,8 @@ start_32:
     mov eax, cr0                       ; Enable Paging
     or  eax, 0x80000000
     mov cr0, eax
+
+%endif
 
     ; Setup stack
     mov esp, STACK_END
