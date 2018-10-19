@@ -19,12 +19,10 @@
 #include "boot.h"
 #include "memory_layout.h" // FIXME: Factor this out
 
-
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 // #include <assert.h>
-
 #include "list.h"
 
 #define DEBUG_PAGING 0
@@ -161,8 +159,8 @@ struct mem_alloc {
 #define LHEAD(x) (&((x)->h))
 
 hwaddr alloc_pages(struct mem_arena *arena, size_t num_pages, size_t alignment);
-void free_pages(struct mem_arena *arena, hwaddr addr);
 int reserve_pages(struct mem_arena *arena, hwaddr addr, size_t num_pages);
+void free_pages(struct mem_arena *arena, hwaddr addr);
 
 /*
  * Find available block of contiguous pages in arena
@@ -380,12 +378,9 @@ MmAllocateContiguousMemoryEx(
 		HighestAcceptableAddress,
 		Alignment,
 		Protect);
-	uint32_t xbe_mem = alloc_pages(&phys_arena, NumberOfBytes, Alignment);
-	if (xbe_mem == 0) {
-		printk("alloc failed!\n");
-		abort();
-	}
-	xbe_mem |= 0x80000000;
+	void *xbe_mem = (void*)alloc_pages(&phys_arena, NumberOfBytes, Alignment);
+	assert(xbe_mem != NULL);
+	xbe_mem = phys_to_virt(xbe_mem);
 	DPRINTK("%x\n", xbe_mem);
 	return (PVOID)xbe_mem;
 }

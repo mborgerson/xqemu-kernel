@@ -170,8 +170,7 @@ XBAPI VOID NTAPI HalReadWritePCISpace(
 		}
 	}
 
-	printk("unsupported call\n");
-	while(1);
+	assert(0);
 }
 
 /**
@@ -196,7 +195,7 @@ KeDelayExecutionThread(
 	)
 {
 	wait_ms(100);
-	return 0;
+	return STATUS_SUCCESS;
 }
 
 /**
@@ -242,6 +241,8 @@ KeInsertQueueDpc(
 	PVOID  SystemArgument2
 	)
 {
+	assert(Dpc != NULL);
+
 	// Just call the DPC for now
     void (*dpc_func)(void) = Dpc->DeferredRoutine;
     dpc_func();
@@ -257,7 +258,10 @@ MmClaimGpuInstanceMemory(
 	PSIZE_T NumberOfPaddingBytes
 	)
 {
-	*NumberOfPaddingBytes = 0x10000;
+	if (NumberOfPaddingBytes != NULL) {
+		*NumberOfPaddingBytes = 0x10000;
+	}
+
 	return (PVOID)0x83FF0000;
 }
 
@@ -272,7 +276,7 @@ NtCreateEvent(
 	BOOLEAN            InitialState
 	)
 {
-	return 0;
+	return STATUS_SUCCESS;
 }
 
 /**
@@ -284,7 +288,7 @@ NtPulseEvent(
 	PLONG  PreviousState
 	)
 {
-	return 0;
+	return STATUS_SUCCESS;
 }
 
 /**
@@ -297,7 +301,7 @@ NtWaitForSingleObject(
 	PLARGE_INTEGER Timeout
 	)
 {
-	return 0;
+	return STATUS_SUCCESS;
 }
 
 /**
@@ -310,10 +314,6 @@ HalRegisterShutdownNotification(
 	)
 {
 }
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // dlmalloc support
@@ -328,7 +328,6 @@ void abort()
 
 int time()
 {
-	// Should be since EPOCH but w/e
+	// FIXME: Should be since EPOCH
 	return BIOS_TICK_COUNT;
 }
-
