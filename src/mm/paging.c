@@ -34,7 +34,7 @@
 } while(0)
 #include "list.h"
 
-#define DEBUG_PAGING 1
+#define DEBUG_PAGING 0
 #if DEBUG_PAGING
 #define DPRINTK printk
 #else
